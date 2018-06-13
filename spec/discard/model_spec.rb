@@ -423,6 +423,15 @@ RSpec.describe Discard::Model do
         expect(user1.comments).to all(be_discarded)
         expect(user2.comments).to all(be_undiscarded)
       end
+
+      it "can discard replacing the association" do
+        user = User.create!
+        old_comment = user.comments.create!
+
+        user.comments = [Comment.create!, Comment.create!]
+
+        expect(old_comment).to be_discarded
+      end
     end
   end
 
